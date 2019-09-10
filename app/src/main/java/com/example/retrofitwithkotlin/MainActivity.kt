@@ -13,6 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.Comparator
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +29,16 @@ class MainActivity : AppCompatActivity() {
         initAdapter()
     }
 
+    private fun sortList() {
+        photoList.sortWith(object: Comparator<Photo>{
+            override fun compare(p0: Photo?, p1: Photo?): Int = when {
+                p0!!.thumbnailUrl < p1!!.thumbnailUrl -> 1
+                p0!!.thumbnailUrl < p1!!.thumbnailUrl -> 0
+                else -> -1
+            }
+        })
+    }
+
     private fun initAdapter() {
         mAdapter = MainAdapter(photoList)
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
@@ -40,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
                 if(response.isSuccessful) {
                     photoList.addAll(response.body()!!)
+                    sortList()
                     binding.recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
