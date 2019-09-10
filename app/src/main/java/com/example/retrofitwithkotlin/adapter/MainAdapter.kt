@@ -1,9 +1,10 @@
-package com.example.retrofitwithkotlin
+package com.example.retrofitwithkotlin.adapter
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.example.retrofitwithkotlin.R
 import com.example.retrofitwithkotlin.databinding.MainPhotoItemBinding
 import com.example.retrofitwithkotlin.model.Photo
 

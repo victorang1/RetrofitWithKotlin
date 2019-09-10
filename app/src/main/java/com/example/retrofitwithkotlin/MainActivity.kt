@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
+import com.example.retrofitwithkotlin.adapter.MainAdapter
 import com.example.retrofitwithkotlin.databinding.ActivityMainBinding
 import com.example.retrofitwithkotlin.model.Photo
 import com.example.retrofitwithkotlin.service.ApiClient
@@ -29,12 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         mAdapter = MainAdapter(photoList)
-        binding.recyclerView.layoutManager = GridLayoutManager(this, 5)
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.adapter = mAdapter
-    }
-
-    private fun sortList() {
-        photoList.sortedWith(compareBy {it.thumbnailUrl})
     }
 
     private fun loadData() {
@@ -43,7 +40,6 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
                 if(response.isSuccessful) {
                     photoList.addAll(response.body()!!)
-                    sortList()
                     binding.recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
