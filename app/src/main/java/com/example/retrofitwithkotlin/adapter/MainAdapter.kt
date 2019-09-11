@@ -8,8 +8,12 @@ import com.example.retrofitwithkotlin.R
 import com.example.retrofitwithkotlin.databinding.MainPhotoItemBinding
 import com.example.retrofitwithkotlin.model.Photo
 
-class MainAdapter (private val photoList : ArrayList<Photo>) :
+class MainAdapter (private val photoList : ArrayList<Photo>, private val listener : OnItemClickListener) :
         RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onClick(photo: Photo)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -24,9 +28,9 @@ class MainAdapter (private val photoList : ArrayList<Photo>) :
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val data = photoList.get(position)
         holder.binding.viewModel = data
-//        holder.binding.llItem.setOnClickListener {
-//            listener.onClick(it, photoList[position])
-//        }
+        holder.binding.llItem.setOnClickListener {
+            listener.onClick(photoList[position])
+        }
     }
 
     class MyViewHolder(var binding : MainPhotoItemBinding) : RecyclerView.ViewHolder(binding.root)

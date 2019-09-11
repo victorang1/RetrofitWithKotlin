@@ -1,5 +1,6 @@
 package com.example.retrofitwithkotlin
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -40,7 +41,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        mAdapter = MainAdapter(photoList)
+        val listener : MainAdapter.OnItemClickListener = object : MainAdapter.OnItemClickListener {
+            override fun onClick(photo: Photo) {
+                val intent = Intent(this@MainActivity, MainDetailActivity::class.java)
+                intent.putExtra("data", photo)
+                startActivity(intent)
+            }
+        }
+        mAdapter = MainAdapter(photoList, listener)
         binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerView.adapter = mAdapter
     }
